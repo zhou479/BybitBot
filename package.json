@@ -1,0 +1,19 @@
+{
+  "name": "bybitbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bybit-api": "^3.10.27",
+    "decimal.js": "^10.4.3",
+    "dotenv": "^16.4.5",
+    "uuid": "^11.0.3",
+    "winston": "^3.17.0"
+  }
+}
