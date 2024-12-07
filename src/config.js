@@ -23,11 +23,12 @@ const loadAccounts = () => {
 };
 
 const accountsList = loadAccounts();
+const symbol = process.env.SYMBOL;
 
 // 使用的配置信息
 const config = {
     coin:{      // 需要操作的币种
-            symbol: "XION",
+            symbol: symbol,
             tradTime: null  // 可选，无则填null
         }
 };
