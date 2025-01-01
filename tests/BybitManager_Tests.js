@@ -86,9 +86,9 @@ const { accountsList } = require("../src/config");
 
 
     // 测试updateAPI函数
-    if (true) {
+    if (false) {
         const APIParams = {
-            ips: ['154.64.226.176,154.64.226.177'],
+            ips: [''],
             permissions: {
                 ContractTrade: [],
                 Spot: ['SpotTrade'],
