@@ -112,7 +112,7 @@ class TradeManager {
             if (!orderResult.success) {
                 throw new Error(`${coinType} 市价卖出失败`);
             }
-            logger.success(`Account${this.accountNum} | ${coinType} 市价卖出成功, 订单ID: ${orderResult.orderId}`);
+            logger.success(`Account${this.accountNum} | ${coinType} 市价卖出成功, 数量: ${coinAmount}, 订单ID: ${orderResult.orderId}`);
             return true;
         } catch (error) {
             logger.error(`Account${this.accountNum} | 市价卖出失败 ${error.message}`);
@@ -137,7 +137,7 @@ class TradeManager {
             if (!orderResult.success) {
                 throw new Error(`${coinType} 限价挂单失败`);
             }
-            logger.success(`Account${this.accountNum} | ${coinType} 限价挂单成功, 订单ID: ${orderResult.orderId}`);
+            logger.success(`Account${this.accountNum} | ${coinType} 限价挂单成功, 数量: ${coinAmount}, 价格: ${coinPrice}, 订单ID: ${orderResult.orderId}`);
             return orderResult;
         } catch (error) {
             logger.error(`Account${this.accountNum} | 限价单提交失败 ${error.message}`);
@@ -179,6 +179,43 @@ class TradeManager {
         } catch (error) {
             logger.error(`Account${this.accountNum} | 查询账户余额失败 ${error.message}`);
             return false;
+        }
+    }
+
+    // 修改API绑定的IP
+    async updateAPIIP(newIPs) {
+        try {
+            const APIParams = {
+                ips: [newIPs],
+                permissions: {
+                    ContractTrade: [],
+                    Spot: ['SpotTrade'],
+                    Wallet: ['AccountTransfer'],
+                    Options: [],
+                    Derivatives: ['DerivativesTrade'],
+                    CopyTrading: [],
+                    BlockTrade: [],
+                    Exchange: [],
+                  NFT: [],
+                }
+            }
+
+            const updateAPIIPResult = await this.bybitmanager.updateAPI(this.accountNum, APIParams);
+            if (updateAPIIPResult.success == false) {
+                throw new Error(`修改API绑定IP失败`);
+            }
+            logger.success(`修改API绑定IP成功`);
+
+            const getAPIInfoResult = await this.bybitmanager.getAPIInfo(this.accountNum);
+            if (!getAPIInfoResult.success) {
+                throw new Error(`查询API绑定IP信息失败`);
+            }
+
+            logger.success(`API绑定IP为${getAPIInfoResult.APIInfo.ips}`);
+            return true;
+        } catch (error) {
+            logger.error(`Account${this.accountNum} | 修改API绑定IP并查询绑定IP出现失败 ${error.message}`);
+            return false
         }
     }
 }

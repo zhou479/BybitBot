@@ -141,7 +141,7 @@ class BybitManager {
             // const coinBasePrecisionNum = Number(coinBasePrecision);
             // const coinMinOrderQtyNum = Number(coinMinOrderQty);
             // const coinAmount = (Math.floor(coinBalanceNum / coinBasePrecisionNum) * coinBasePrecisionNum).toString();
-            
+
             // 使用decimal避免精度问题
             const coinBalanceNum = new Decimal(coinBalance);
             const coinBasePrecisionNum = new Decimal(coinBasePrecision);
@@ -328,6 +328,43 @@ class BybitManager {
             return false;
         }
     }
+
+    // 查询API信息
+    async getAPIInfo(accountNum) {
+        try {
+            const getAPIInfoResult = await this.client.getQueryApiKey();
+            if (getAPIInfoResult.retCode !== 0) {
+                throw new Error(`查询API信息失败: ${getAPIInfoResult.retMsg}`);
+            }
+            // console.log(getAPIInfoResult.result);
+            return {
+                success: true,
+                APIInfo: getAPIInfoResult.result
+            }
+        } catch (error) {
+            logger.error(`Account${accountNum} | getAPIInfo出现错误: ${error.message}`);
+            return {success: false, APIInfo: null}
+        }
+    }
+
+    // 更新API权限
+    async updateAPI(accountNum, APIParams) {
+        try {
+            const updateAPIResult = await this.client.updateMasterApiKey(APIParams);
+            if (updateAPIResult.retCode !== 0) {
+                throw new Error(`修改API信息失败: ${updateAPIResult.retMsg}`);
+            }
+            return {
+                success: true,
+                updateAPIInfo: updateAPIResult.result
+            }
+        } catch (error) {
+            logger.error(`Account${accountNum} | UpdateAPI出现错误: ${error.message}`);
+            return {success: false, updateAPIInfo: null}
+        }
+
+    }
+
 
 }
 

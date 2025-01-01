@@ -1,3 +1,4 @@
+const { loggers } = require("winston");
 const BybitManager = require("../src/BybitManager");
 const { accountsList } = require("../src/config");
 
@@ -7,6 +8,7 @@ const { accountsList } = require("../src/config");
         accountsList[0].apiKey,
         accountsList[0].apiSecret
     )
+    const AccountNum = '1';
 
     // 测试getAllCoinsBalanceMe函数
     if (false) {
@@ -19,7 +21,7 @@ const { accountsList } = require("../src/config");
     }
 
     // 测试BMgetCoinBalance函数
-    if (true) {
+    if (false) {
         const btcBalance = await bybitmanager.BMgetCoinBalance('FUND', 'BTC');
         console.log(btcBalance);
     }
@@ -82,4 +84,34 @@ const { accountsList } = require("../src/config");
         }
     }
 
+
+    // 测试updateAPI函数
+    if (true) {
+        const APIParams = {
+            ips: ['154.64.226.176,154.64.226.177'],
+            permissions: {
+                ContractTrade: [],
+                Spot: ['SpotTrade'],
+                Wallet: ['AccountTransfer'],
+                Options: [],
+                Derivatives: ['DerivativesTrade'],
+                CopyTrading: [],
+                BlockTrade: [],
+                Exchange: [],
+              NFT: [],
+            }
+        }
+        const result = await bybitmanager.updateAPI(AccountNum, APIParams);
+        if (result.success) {
+            console.log(`修改API信息成功 修改后的API IP为 ${result.updateAPIInfo.ips} permission为 ${result.updateAPIInfo.permissions}`);
+        } else {
+            console.log(`修改API信息失败`);
+        }
+    }
+
+    // 测试getAPIInfo函数
+    if (true) {
+        await bybitmanager.getAPIInfo(AccountNum);
+    }
+    
 })();

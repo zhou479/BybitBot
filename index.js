@@ -10,13 +10,16 @@ async function main() {
             // await tradeManager.cancelAllOrders();
 
             // 市价卖出
-            // await tradeManager.placeMarketOrders(config.coin.symbol, 'Sell');
+            await tradeManager.placeMarketOrders(config.coin.symbol, 'Sell');
 
             // 限价卖出(可等待交易开启, 自行设置限价单的价格)
             // await tradeManager.placeLimitOrders(config.coin.symbol, 'Sell', '0.16');
 
             // 查询账户所有余额
             await tradeManager.queryAccountBalances();
+
+            // 修改API绑定的IP, 多个IP写法为'1.1.1.1,2.2.2.2'
+            // await tradeManager.updateAPIIP('154.64.226.176')
         });
         await Promise.all(accountPromises);
     } catch (error) {
