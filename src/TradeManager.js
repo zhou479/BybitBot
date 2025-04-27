@@ -161,10 +161,10 @@ class TradeManager {
     }
 
     // 查询Account所有余额
-    async queryAccountBalances() {
+    async queryAccountBalances(coin) {
         try {
-            const FUNDBalancesResult = await this.bybitmanager.BMgetAllCoinsBalance(this.accountNum, 'FUND');
-            const UNIFIEDBalancesResult = await this.bybitmanager.BMgetAllCoinsBalance(this.accountNum, 'UNIFIED');
+            const FUNDBalancesResult = await this.bybitmanager.BMgetAllCoinsBalance(this.accountNum, 'FUND', coin);
+            const UNIFIEDBalancesResult = await this.bybitmanager.BMgetAllCoinsBalance(this.accountNum, 'UNIFIED', coin);
             let accountBalances = [];
             if (FUNDBalancesResult.success) {
                 accountBalances = [...FUNDBalancesResult.coinsList];

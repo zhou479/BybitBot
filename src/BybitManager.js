@@ -14,10 +14,10 @@ class BybitManager {
     }
 
     // 查询所有币种余额，返回值为币种余额列表
-    async BMgetAllCoinsBalance(accountNum, accountType) {
+    async BMgetAllCoinsBalance(accountNum, accountType, coin) {
         try {
             let coinsList = [];
-            const allCoinBalanceResult = await this.client.getAllCoinsBalance({accountType: accountType});
+            const allCoinBalanceResult = await this.client.getAllCoinsBalance({accountType: accountType, coin: coin});
             if (allCoinBalanceResult.retCode !== 0) {
                 throw new Error(`查询${accountType}账户余额失败: ${allCoinBalanceResult.retMsg}`);
             }
